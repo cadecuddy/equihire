@@ -40,19 +40,24 @@ myDict["city"] = data["location"]["city"]
 
 i = 1
 for edu in data["education"]:
-    myDict[f"university_{i}"].append(data["organization"])
-    myDict[f"education_{i}"].append(data["accreditation"]["input_str"])
-    myDict[f"gpa_{i}"].append(data["raw"])
-    myDict[f"location_{i}"].append(data["location"]["raw_input"])
+    myDict[f"university_{i}"] = edu["organization"]
+    myDict[f"education_{i}"] = edu["accreditation"]["input_str"]
+    myDict[f"gpa_{i}"] = edu["raw"]
+    myDict[f"location_{i}"] = ["location"]["raw_input"]
+    i += 1
+    # myDict[]
+
+i = 1
+for work in data["work_experience"]:
+    myDict[f"job_{i}"] = work["job_title"]
+    myDict[f"location_{i}"] = work["location"]["raw_input"]
+    myDict[f"description_{i}"] = work["job_description"]
+    myDict[f"endDate_{i}"] = work["dates"]["end_date"]
     i += 1
 
 i = 1
-for edu in data["education"]:
-    myDict[f"university_{i}"].append(data["organization"])
-    myDict[f"education_{i}"].append(data["accreditation"]["input_str"])
-    myDict[f"gpa_{i}"].append(data["raw"])
-    myDict[f"location_{i}"].append(data["location"]["raw_input"])
-    i += 1                           
+for skill in data["skills"]:
+                               
     
   
 # Closing file
