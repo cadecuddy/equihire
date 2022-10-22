@@ -1,0 +1,7 @@
+Save the root.crt file in appdata/postgresql/
+pip3 install "psycopg[binary]"
+
+cd cockroachDB/example-app-python-psycopg3/
+export DATABASE_URL = "postgresql://mansimran:<ENTER-SQL-USER-PASSWORD>@free-tier14.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&options=--cluster%3Dequihire-6057"
+
+python example.py
