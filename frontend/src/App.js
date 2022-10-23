@@ -11,10 +11,10 @@ import About from "./components/About.js"
 
 function App() {
     const [settings, setSettings] = useState({
-        "Name": false,
-        "ContactInfo": false,
-        "Education": false,
-        "Location": false,
+        "Name": true,
+        "ContactInfo": true,
+        "Education": true,
+        "Location": true,
     });
 
     const editSettings = (settings) => {
