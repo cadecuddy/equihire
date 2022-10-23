@@ -28,7 +28,7 @@ export default function About() {
         <FadeIn transitionDuration={750} delay={400}>
         <div className='flex ml-24'>
             <img src={ScaleClipart} className="h-40 w-40 rotate-6 select-none pointer-events-none flex justify-center" alt="resume clipart" />
-          <div className="font-extrabold text-transparent text-xl w-52 text-left ml-4 align-bottom mt-4 bg-clip-text bg-gradient-to-r from-black to-gray-500">eliminate potential points of bias in candidate resumes
+          <div className="font-extrabold text-transparent text-xl w-60 text-left ml-4 align-bottom mt-4 bg-clip-text bg-gradient-to-r from-black to-gray-500">eliminate potential points of bias towards prospective candidates
           </div>
         </div>
         </FadeIn>
