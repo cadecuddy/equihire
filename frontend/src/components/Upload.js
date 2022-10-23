@@ -27,7 +27,7 @@ export default function Upload() {
     <div className='flex flex-col items-center justify-center'>
       <div className='text-2xl font-bold text-gray-700'>Applicants, upload your resume.</div>
       <div className='text-gray-500'>We support .pdf, .doc, and .docx files</div>
-      <input name="Upload Saved Reply" type="file" onChange={onFileChange} className='flex mt-6 items-center justify-center content-center' accept=".pdf,.doc,.docx"/>
+      <input name="Upload Saved Reply" type="file" onChange={onFileChange} className='flex mt-6 ml-16 items-center justify-center content-center' accept=".pdf,.doc,.docx"/>
       <div className='mt-4'>
 
 				<Button color='secondary' variant='outlined' onClick={uploadImage}>Submit</Button>
