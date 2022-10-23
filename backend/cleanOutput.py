@@ -43,7 +43,7 @@ def cleanJSON():
         myDict[f"description_{i}"] = work["job_description"]
         if "dates" in work:
             myDict[f"endDate_{i}"] = work["dates"]["end_date"]
-        i += 1
+            i += 1
     myDict[f"work_count"] = i - 1
 
 

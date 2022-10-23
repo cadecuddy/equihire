@@ -17,7 +17,7 @@ from sqlalchemy.orm import sessionmaker
 
 app = Flask(__name__)
 ALLOWED_EXTENSIONS = {'pdf', 'docx'}
-
+db_uri = os.environ['DATABASE_URL'].replace("postgresql://", "cockroachdb://")
 # conn_string = os.environ.get("DB_URI")
 
 
@@ -47,9 +47,7 @@ def upload_file():
             file.save(os.path.join(filename))
         parse(filename)
         data = cleanJSON()
-        opt = parse_cmdline()
-        db_url = opt.dsn
-        a=applicant.applicant_mapper(db_url)
+        a=applicant.applicant_mapper(db_uri)
         a.add_applicant(data)
     return redirect("/")
 

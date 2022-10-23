@@ -6,8 +6,8 @@ from sqlalchemy.sql.sqltypes import INT
 Base = declarative_base()
 
 class Applicant(Base):
-    __tablename__ = 'public.applicant1'
-    applicant_id = Column(UUID, primary_key=True)
+    __tablename__ = 'applicant1'
+    applicant_id = Column(INT, primary_key=True)
     first_name = Column(String)
     last_name = Column(String)
     phone_number = Column(String)
@@ -18,18 +18,18 @@ class Applicant(Base):
     city = Column(String)
     
 class Education(Base):
-    __tablename__ = 'public.education'
-    education_id = Column(UUID, primary_key=True)
-    applicant_id = Column(UUID, ForeignKey("public.applicant1.id"))
-    organization = Column(String)
+    __tablename__ = 'education'
+    education_id = Column(INT, primary_key=True)
+    applicant_id = Column(INT, ForeignKey("applicant1.applicant_id"))
+    education = Column(String)
     gpa = Column(String)
     location = Column(String)
     university = Column(String)
  
 class Experience(Base):
-    __tablename__ = 'public.experience'
-    experience_id = Column(UUID, primary_key=True)
-    applicant_id = Column(UUID, ForeignKey("public.applicant1.id"))
+    __tablename__ = 'experience'
+    experience_id = Column(INT, primary_key=True)
+    applicant_id = Column(INT, ForeignKey("applicant1.applicant_id"))
     company = Column(String)
     job_title = Column(String)
     location = Column(String)
@@ -37,13 +37,13 @@ class Experience(Base):
     end_date = Column(String)
 
 class Skills(Base):
-    __tablename__ = 'public.skills'
-    skill_id = Column(UUID, primary_key=True)
-    applicant_id = Column(UUID, ForeignKey("public.applicant1.id"))
+    __tablename__ = 'skills'
+    skill_id = Column(INT, primary_key=True)
+    applicant_id = Column(INT, ForeignKey("applicant1.applicant_id"))
     skill_info = Column(String)
     
 class Project(Base):
-    __tablename__ = 'public.project'
-    project_id = Column(UUID, primary_key=True)
-    applicant_id = Column(UUID, ForeignKey("public.applicant1.id"))
+    __tablename__ = 'project'
+    project_id = Column(INT, primary_key=True)
+    applicant_id = Column(INT, ForeignKey("applicant1.applicant_id"))
     project_text = Column(String)

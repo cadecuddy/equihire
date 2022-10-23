@@ -22,24 +22,24 @@ class applicant_mapper:
                 session=session
                 )
         )
-        applicantId = applicant.getattr("applicant_id")
+        # applicantId = applicant.getattr("applicant_id")
         
         for i in range(data['education_count']):
             run_transaction(self.sessionmaker,
                     lambda session: transactions.add_education(
-                aId=applicantId,
-                uni=data[f"university_{i+1}"],
-                eduType=data[f"education_{i+1}"],
-                grade=data[f"gpa_{i+1}"],
-                loc=data[f"location_{i+1}"],
-                session=session
+                # aId=applicantId,
+                    uni=data[f"university_{i+1}"],
+                    eduType=data[f"education_{i+1}"],
+                    grade=data[f"gpa_{i+1}"],
+                    loc=data[f"location_{i+1}"],
+                    session=session
                 )
             )
             
         for i in range(data['work_count']):
             run_transaction(self.sessionmaker, lambda session:
                 transactions.add_experience(
-                aId=applicantId,
+                # aId=applicantId,
                 title=data[f"job_{i+1}"],
                 loc=data[f"location_{i+1}"],
                 descrip=data[f"description_{i+1}"],
@@ -52,7 +52,7 @@ class applicant_mapper:
         for i in range(data['skill_count']):
             run_transaction(self.sessionmaker, 
                     lambda session: transactions.add_skills(
-                                        aId=applicantId,
+                                        # aId=applicantId,
                                         info=data[f"skill_{i+1}"],
                                         session=session
                                     )
@@ -60,7 +60,7 @@ class applicant_mapper:
         
         run_transaction(self.sessionmaker, 
                          lambda session: transactions.add_projects(
-            aId=applicantId,
+            # aId=applicantId,
             info=data[f"projects"],
             session=session
             )
