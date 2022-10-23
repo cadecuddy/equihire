@@ -33,9 +33,14 @@ export default function Resume({ settings, data }) {
           {
           !settings.Email ? 
           <div className='flex flex-row text-xl'>
-            {data.emails ? "Email: " + data.emails : 'N/A'}
+            {data.emails ? "Email: "  +  data.emails : 'N/A'}
           </div>
           : null
+          }
+          {
+          <div className='flex flex-row text-xl'>
+            {data.phone_number ? "Phone: " + data.phone_number : ''}
+          </div>
           }
           {
           !settings.Website ?

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Switch, List, ListSubheader, ListItem, ListItemText, ListItemIcon } from '@mui/material'
 import { useEffect } from 'react';
+import FadeIn from 'react-fade-in'
 
 export default function Settings({ settings, editSettings }) {
   const [state, setState] = React.useState([settings.Name, settings.Email, settings.Website, settings.University, settings.Location]);
@@ -11,6 +12,7 @@ export default function Settings({ settings, editSettings }) {
   }, [state]);
 
   return (
+    <FadeIn transitionDuration={650}>
     <div className='flex items-center justify-center align-middle mt-12' >
       <div className="h-[120px] select-none font-extrabold text-transparent mr-12 text-4xl text-center mt-4 bg-clip-text bg-gradient-to-r from-purple-400 to-blue-600">customize candidate anonymity</div>
       <List
@@ -27,7 +29,7 @@ export default function Settings({ settings, editSettings }) {
           />
         </ListItem>
         <ListItem divider>
-          <ListItemText primary="Email" />
+          <ListItemText primary="Email / Phone" />
           <Switch
             edge="end"
             color="secondary"
@@ -64,5 +66,6 @@ export default function Settings({ settings, editSettings }) {
         </ListItem>
       </List>
     </div >
+  </FadeIn>
   )
 }
