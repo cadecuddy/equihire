@@ -21,9 +21,14 @@ def cleanJSON():
     else:
         myDict['website'] = None
     myDict[ 'email'] = data['emails'][0]
-    myDict['state'] = data["location"]["state"]
-    myDict['country'] = data["location"]["country"]
-    myDict["city"] = data["location"]["city"]
+    if 'location' in data:
+        if 'state' in data['location']:
+             myDict['state'] = data["location"]["state"]
+        else:
+            myDict['state'] = ''
+            
+        myDict['country'] = data["location"]["country"]
+        myDict["city"] = data["location"]["city"]
 
     i = 1
     for edu in data["education"]:
