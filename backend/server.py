@@ -46,7 +46,7 @@ def upload_file():
         data = cleanJSON()
         a=applicant.applicant_mapper(db_uri)
         a.add_applicant(data)
-    return redirect("/")
+    return "<p>hello</p>"
 
 # GET request to all the available applicant data in cockroachDB 
 @app.route('/applicant_data', methods=['GET'])
@@ -66,28 +66,31 @@ def getApplicantData():
                                application_name="$ docs_simplecrud_psycopg3", 
                                row_factory=dict_row)
         with conn.cursor() as cur:
-            applicantsJSON = cur.execute("SELECT * FROM public.applicant1").fetchall()
+            applicantsJSON = cur.execute("SELECT * FROM applicant1").fetchall()
             print(applicantsJSON)
             for row in applicantsJSON:
                 id = row["applicant_id"]
-                # 
-                experiences = cur.execute(f"SELECT * FROM public.experience WHERE public.experience.applicant_id = {id}").fetchall()
+                
+                row["experiences"] = []
+                experiences = cur.execute(f"SELECT * FROM experience WHERE experience.applicant_id = {id}").fetchall()
                 if experiences is not None:
                     for exp in experiences:
-                        row.update(exp)
-                # 
-                educations = cur.execute(f"SELECT * FROM public.education WHERE public.education.applicant_id = {id}").fetchall()
+                        row["experiences"].append(exp)
+                #
+                row["educations"] = []
+                educations = cur.execute(f"SELECT * FROM education WHERE education.applicant_id = {id}").fetchall()
                 if educations is not None:
                     for edu in educations:
-                        row.update(edu)
+                        row["educations"].append(edu)
                 # 
-                skills = cur.execute(f"SELECT * FROM public.skills WHERE public.skills.applicant_id = {id}").fetchall()
+                row["skills"] = []
+                skills = cur.execute(f"SELECT * FROM skills WHERE skills.applicant_id = {id}").fetchall()
                 if skills is not None: 
                     for skill in skills:
-                        row.update(skill)
+                        row["skills"].append(skill)
                 
                 # Only create dict obj with project_text if it returns non-empty from the DB
-                project_text_lst = cur.execute(f"SELECT * FROM public.project WHERE public.project.applicant_id = {id}").fetchall()
+                project_text_lst = cur.execute(f"SELECT * FROM project WHERE project.applicant_id = {id}").fetchall()
                 if len(project_text_lst) > 0:
                     text = project_text_lst[0]['project_text']
                     d={'project_text': text}
