@@ -4,7 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import ApplicantList from './ApplicantList';
 
-export default function CenteredTabs() {
+export default function CenteredTabs({ settings }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -24,10 +24,10 @@ export default function CenteredTabs() {
       </Box>
       <Box className="pt-2">
         {value === 0 && (
-          <ApplicantList entries={names} unreadList={true} />
+          <ApplicantList settings={settings} entries={names} unreadList={true} />
         )}
         {value === 1 && (
-          <ApplicantList entries={["John", "Harvey", "Kellogg"]} unreadList={false} />
+          <ApplicantList settings={settings} entries={["John", "Harvey", "Kellogg"]} unreadList={false} />
         )}
       </Box>
     </div>

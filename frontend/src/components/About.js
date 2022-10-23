@@ -13,7 +13,15 @@ export default function About() {
           <ReactFloaterJs>
             <img src={ResumeClipart} className="h-40 w-40 -rotate-6 select-none pointer-events-none flex justify-center" alt="resume clipart" />
           </ReactFloaterJs>
-          <div className="font-extrabold text-transparent text-xl text-left mt-4 bg-clip-text bg-gradient-to-r from-purple-600 to-blue-800">select the candidate information hiring can managers view
+          <div className="font-extrabold text-transparent text-xl w-52 text-left ml-2 align-bottom mt-4 bg-clip-text bg-gradient-to-r from-purple-600 to-blue-800">select the candidate information hiring can managers view
+          </div>
+        </div>
+
+        <div className='flex ml-24'>
+          <ReactFloaterJs>
+            <img src={ResumeClipart} className="h-40 w-40 -rotate-6 select-none pointer-events-none flex justify-center" alt="resume clipart" />
+          </ReactFloaterJs>
+          <div className="font-extrabold text-transparent text-xl w-52 text-left ml-2 align-bottom mt-4 bg-clip-text bg-gradient-to-r from-purple-600 to-blue-800">select the candidate information hiring can managers view
           </div>
         </div>
       </div>
