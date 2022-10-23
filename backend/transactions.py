@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 import time
 
 def getID():
-    return int(time.time() / 1000000)
+    return int(time.time() / 10000)
 
 
 
