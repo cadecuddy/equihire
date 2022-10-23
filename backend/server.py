@@ -52,6 +52,7 @@ def upload_file():
 @app.route('/applicant_data', methods=['GET'])
 def getApplicantData():
     applicants = []
+    print("HIT")
     try:
         # Attempt to connect to cluster with connection string provided to
         # script. By default, this script uses the value saved to the
@@ -59,7 +60,9 @@ def getApplicantData():
         # For information on supported connection string formats, see
         # https://www.cockroachlabs.com/docs/stable/connect-to-the-database.html.
         # db_url = opt.dsn
-        conn = psycopg.connect(db_uri, 
+        
+        DATABASE_URL="postgresql://mansimran:hzxjyevUv4v-RPyTesPPyA@free-tier14.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&options=--cluster%3Dequihire-6057"
+        conn = psycopg.connect(DATABASE_URL, 
                                application_name="$ docs_simplecrud_psycopg3", 
                                row_factory=dict_row)
         with conn.cursor() as cur:
@@ -91,6 +94,7 @@ def getApplicantData():
                     row.update(d)
                 applicants.append(row)
                 print(applicants)
+            print("HIT")
         return applicants
                 
     except Exception as e:
@@ -98,4 +102,35 @@ def getApplicantData():
         logging.fatal(e)
         return
      
-getApplicantData()
+@app.route("/delete/<applicant_id>", methods=["DELETE"])
+def deleteApplicant(applicant_id):
+    conn = psycopg.connect(db_uri, 
+                               application_name="$ docs_simplecrud_psycopg3", 
+                               row_factory=dict_row)
+    with conn.cursor() as cur:
+        cur.execute(f"DELETE FROM applicant1 where applicant_id = {applicant_id}")
+        logging.debug("delete_accounts(): status message: %s",
+                      cur.statusmessage)
+
+    with conn.cursor() as cur:
+        cur.execute(f"DELETE FROM experience where applicant_id = {applicant_id}")
+        logging.debug("delete_accounts(): status message: %s",
+                      cur.statusmessage)
+
+    with conn.cursor() as cur:
+        cur.execute(f"DELETE FROM education where applicant_id = {applicant_id}")
+        logging.debug("delete_accounts(): status message: %s",
+                      cur.statusmessage)
+
+    with conn.cursor() as cur:
+        cur.execute(f"DELETE FROM skills where applicant_id = {applicant_id}")
+        logging.debug("delete_accounts(): status message: %s",
+                      cur.statusmessage)
+
+    with conn.cursor() as cur:
+        cur.execute(f"DELETE FROM project where applicant_id = {applicant_id}")
+        logging.debug("delete_accounts(): status message: %s",
+                      cur.statusmessage)
+    conn.commit()       
+     
+# getApplicantData()
