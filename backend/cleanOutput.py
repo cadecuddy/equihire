@@ -11,15 +11,15 @@ def cleanJSON():
     # a dictionary
     data = json.load(f)
     
-    # Iterating through the json
-    # list
-    # for i in data['data']:
-    data = data["data"]
+    data = data["data"] 
 
     myDict['first_name'] = data["name"]["first"]
     myDict['last_name'] = data["name"]["last"]
     myDict['phone_number'] = data["phone_numbers"][0]
-    # myDict['website'] = data["websites"][0]
+    if 'website' in data['websites']:
+        myDict['website'] = data["websites"][0]
+    else:
+        myDict['website'] = None
     myDict[ 'emails'] = data['emails'][0]
     myDict['state'] = data["location"]["state"]
     myDict['country'] = data["location"]["country"]

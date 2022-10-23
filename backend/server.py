@@ -1,23 +1,27 @@
 import os
+import json
 import logging
 from pdf2json import parse
 from flask import Flask, Response, flash, redirect, request, url_for
 from argparse import ArgumentParser, RawTextHelpFormatter
 import psycopg
-from psycopg.errors import SerializationFailure, Error
-from psycopg.rows import namedtuple_row
+# from psycopg.errors import SerializationFailure, Error
+# from psycopg.rows import namedtuple_row
+from psycopg.rows import dict_row
 
 app = Flask(__name__)
 ALLOWED_EXTENSIONS = {'pdf', 'docx'}
 
+# NOT NEEDED???
 @app.route("/")
 def index():
     return "<p>Hello, World!</p>"
-
+# only allow uploads from allowed files
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+           
+# end that performs a POST request to upload a json file into our system
 # @app.route('/upload', methods=['POST'])
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -34,8 +38,10 @@ def upload_file():
             file.save(os.path.join(filename))
         return Response(parse(filename))
     
+# GET request to all the available applicant data in cockroachDB 
 # @app.route('/applicant_data', methods=['GET'])
 def getApplicantData():
+    applicants = []
     opt = parse_cmdline()
     logging.basicConfig(level=logging.DEBUG if opt.verbose else logging.INFO)
     try:
@@ -47,18 +53,28 @@ def getApplicantData():
         db_url = opt.dsn
         conn = psycopg.connect(db_url, 
                                application_name="$ docs_simplecrud_psycopg3", 
-                               row_factory=namedtuple_row)
+                               row_factory=dict_row)
         with conn.cursor() as cur:
-            for row in cur.execute("SELECT * FROM public.applicant1"):
-                print(row)
-
+            applicantsJSON = cur.execute("SELECT * FROM public.applicant1")
+            for row in applicantsJSON:
+                # print(row)
+                id = row["applicant_id"]
+                row.update(cur.execute(f"SELECT * FROM public.experience WHERE public.experience.applicant_id = {id}").fetchone())
+                row.update(cur.execute(f"SELECT * FROM public.education WHERE public.education.applicant_id = {id}").fetchone())
+                row.update(cur.execute(f"SELECT * FROM public.skills WHERE public.skills.applicant_id = {id}").fetchone())
+                row.update(cur.execute(f"SELECT * FROM public.project WHERE public.project.applicant_id = {id}").fetchone())
+                
+                applicants.append(row)
+            print(json.dumps(applicants))                     
+                
     except Exception as e:
-        logging.fatal("database connection failed")
+        logging.fatal("database connection failed or other error")
         logging.fatal(e)
         return
-    #select * from APPLICANTS
-    # for every id:
-    # get all 5 tables 
+
+def deleteApplicant():
+    pass   
+# parses command line to get the DATABASE_URL env variable
 def parse_cmdline():
     parser = ArgumentParser(description=__doc__,
                             formatter_class=RawTextHelpFormatter)
