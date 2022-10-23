@@ -46,7 +46,7 @@ def upload_file():
         data = cleanJSON()
         a=applicant.applicant_mapper(db_uri)
         a.add_applicant(data)
-    return "<p>hello</p>"
+    return Response("go to sleep", status=201, mimetype='application/json')
 
 # GET request to all the available applicant data in cockroachDB 
 @app.route('/applicant_data', methods=['GET'])

@@ -55,6 +55,6 @@ def cleanJSON():
         if section["section_type"] == "Projects":
             myDict["projects"] =  section["text"]
             break
-    myDict["approval_status"] = 0 
+    myDict["approval_status"] = "0"
     return myDict
     
