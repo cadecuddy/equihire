@@ -55,16 +55,32 @@ def getApplicantData():
                                application_name="$ docs_simplecrud_psycopg3", 
                                row_factory=dict_row)
         with conn.cursor() as cur:
-            applicantsJSON = cur.execute("SELECT * FROM public.applicant1")
+            applicantsJSON = cur.execute("SELECT * FROM public.applicant1").fetchall()
+            print(applicantsJSON)
             for row in applicantsJSON:
-                # print(row)
-                id = row["applicant_id"]
-                row.update(cur.execute(f"SELECT * FROM public.experience WHERE public.experience.applicant_id = {id}").fetchone())
-                row.update(cur.execute(f"SELECT * FROM public.education WHERE public.education.applicant_id = {id}").fetchone())
-                row.update(cur.execute(f"SELECT * FROM public.skills WHERE public.skills.applicant_id = {id}").fetchone())
-                row.update(cur.execute(f"SELECT * FROM public.project WHERE public.project.applicant_id = {id}").fetchone())
-                
-                applicants.append(row)
+                if row is not None:
+                    print(row)
+                    id = row["applicant_id"]
+                    # 
+                    experiences = cur.execute(f"SELECT * FROM public.experience WHERE public.experience.applicant_id = {id}").fetchall()
+                    if experiences:
+                        for exp in experiences:
+                            row.update(exp)
+                    # 
+                    educations = cur.execute(f"SELECT * FROM public.education WHERE public.education.applicant_id = {id}").fetchall()
+                    if educations is not None:
+                        for edu in educations:
+                            row.update(edu)
+                    # 
+                    skills = cur.execute(f"SELECT * FROM public.skills WHERE public.skills.applicant_id = {id}").fetchall()
+                    if skills is not None: 
+                        for skill in skills:
+                            row.update(skill)
+                    
+                    
+                    row.update(cur.execute(f"SELECT * FROM public.project WHERE public.project.applicant_id = {id}").fetchone())
+                    applicants.append(row)
+                    print(applicants)
             print(json.dumps(applicants))                     
                 
     except Exception as e:
