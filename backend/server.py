@@ -58,16 +58,16 @@ def upload_file():
 @app.route('/applicant_data', methods=['GET'])
 def getApplicantData():
     applicants = []
-    opt = parse_cmdline()
-    logging.basicConfig(level=logging.DEBUG if opt.verbose else logging.INFO)
+    # opt = parse_cmdline()
+    # logging.basicConfig(level=logging.DEBUG if opt.verbose else logging.INFO)
     try:
         # Attempt to connect to cluster with connection string provided to
         # script. By default, this script uses the value saved to the
         # DATABASE_URL environment variable.
         # For information on supported connection string formats, see
         # https://www.cockroachlabs.com/docs/stable/connect-to-the-database.html.
-        db_url = opt.dsn
-        conn = psycopg.connect(db_url, 
+        # db_url = opt.dsn
+        conn = psycopg.connect(db_uri, 
                                application_name="$ docs_simplecrud_psycopg3", 
                                row_factory=dict_row)
         with conn.cursor() as cur:
@@ -108,28 +108,28 @@ def getApplicantData():
         logging.fatal(e)
         return
   
-# parses command line to get the DATABASE_URL env variable
-def parse_cmdline():
-    parser = ArgumentParser(description=__doc__,
-                            formatter_class=RawTextHelpFormatter)
+# # parses command line to get the DATABASE_URL env variable
+# def parse_cmdline():
+#     parser = ArgumentParser(description=__doc__,
+#                             formatter_class=RawTextHelpFormatter)
 
-    parser.add_argument("-v", "--verbose",
-                        action="store_true", help="print debug info")
+#     parser.add_argument("-v", "--verbose",
+#                         action="store_true", help="print debug info")
 
-    parser.add_argument(
-        "dsn",
-        default=os.environ.get("DATABASE_URL"),
-        nargs="?",
-        help="""\
-database connection string\
- (default: value of the DATABASE_URL environment variable)
-            """,
-    )
+#     parser.add_argument(
+#         "dsn",
+#         default=os.environ.get("DATABASE_URL"),
+#         nargs="?",
+#         help="""\
+# database connection string\
+#  (default: value of the DATABASE_URL environment variable)
+#             """,
+#     )
 
-    opt = parser.parse_args()
-    if opt.dsn is None:
-        parser.error("database connection string not set")
-    return opt      
+#     opt = parser.parse_args()
+#     if opt.dsn is None:
+#         parser.error("database connection string not set")
+#     return opt      
 
 # getApplicantData()
 # upload_file()
