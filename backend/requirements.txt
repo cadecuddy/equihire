@@ -1,0 +1,4 @@
+affinda
+psycopg[binary]==3.0.16
+flask
+
