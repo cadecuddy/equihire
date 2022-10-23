@@ -17,6 +17,7 @@ from sqlalchemy.orm import sessionmaker
 app = Flask(__name__)
 ALLOWED_EXTENSIONS = {'pdf', 'docx'}
 db_uri = os.environ['DATABASE_URL'].replace("postgresql://", "cockroachdb://")
+db_uri2 = os.environ['DATABASE_URL']
 # conn_string = os.environ.get("DB_URI")
 CORS(app)
 
@@ -61,8 +62,7 @@ def getApplicantData():
         # https://www.cockroachlabs.com/docs/stable/connect-to-the-database.html.
         # db_url = opt.dsn
         
-        DATABASE_URL="postgresql://mansimran:hzxjyevUv4v-RPyTesPPyA@free-tier14.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&options=--cluster%3Dequihire-6057"
-        conn = psycopg.connect(DATABASE_URL, 
+        conn = psycopg.connect(db_uri2, 
                                application_name="$ docs_simplecrud_psycopg3", 
                                row_factory=dict_row)
         with conn.cursor() as cur:
@@ -107,7 +107,7 @@ def getApplicantData():
      
 @app.route("/delete/<applicant_id>", methods=["DELETE"])
 def deleteApplicant(applicant_id):
-    conn = psycopg.connect(db_uri, 
+    conn = psycopg.connect(db_uri2, 
                                application_name="$ docs_simplecrud_psycopg3", 
                                row_factory=dict_row)
     with conn.cursor() as cur:
@@ -134,6 +134,17 @@ def deleteApplicant(applicant_id):
         cur.execute(f"DELETE FROM project where applicant_id = {applicant_id}")
         logging.debug("delete_accounts(): status message: %s",
                       cur.statusmessage)
-    conn.commit()       
+    conn.commit()
+    
+@app.route("/deleteAll", methods=["DELETE"])
+def deleteAll():
+    
+    data = getApplicantData()
+    for d in data:
+        
+        deleteApplicant(d['applicant_id'])
+            
+            
+                                    
      
 # getApplicantData()
