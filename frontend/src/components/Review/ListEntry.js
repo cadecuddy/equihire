@@ -6,22 +6,26 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Person from '@mui/icons-material/Person';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import NotInterestedIcon from '@mui/icons-material/NotInterested';
 
 export default function ListEntry({ data }) {
-  const [checked, setChecked] = useState(false);
+  const [status, setStatus] = useState(0);
+
+  const buttons = [<RadioButtonUncheckedIcon />, <CheckCircleIcon sx={{ color: 'green' }} />, <NotInterestedIcon sx={{ color: 'red' }} />];
 
   const handleClick = () => {
-    setChecked(!checked);
+    setStatus((status + 1) % 3);
   }
 
   return (
     <ListItem
+      divider
       secondaryAction={
         <IconButton edge="end" aria-label="delete" onClick={handleClick}>
-          {!checked ?
-            <RadioButtonUncheckedIcon /> :
-            <RadioButtonCheckedIcon />}
+          {
+            buttons[status]
+          }
         </IconButton>
       }
     >
