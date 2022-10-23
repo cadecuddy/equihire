@@ -15,7 +15,7 @@ def add_applicant(session, fName, lName, num, e, web, s, countryAdd, cityAdd):
         phone_number=num,
         email=e,
         website=web,
-        state=s,
+        # state=s,
         country=countryAdd,
         city=cityAdd,
         

@@ -22,7 +22,7 @@ def cleanJSON():
         myDict['website'] = None
     myDict[ 'email'] = data['emails'][0]
     if 'location' in data:
-        if 'state' in data['location']:
+        if 'formatted' in data['location']:
              myDict['state'] = data["location"]["state"]
         else:
             myDict['state'] = ''
