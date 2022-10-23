@@ -13,7 +13,7 @@ class Applicant(Base):
     phone_number = Column(String)
     email = Column(String)
     website = Column(String)
-    # state = Column(String)
+    state = Column(String)
     country = Column(String)
     city = Column(String)
     

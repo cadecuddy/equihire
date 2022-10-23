@@ -1,6 +1,5 @@
 import random
 from models import Applicant, Education, Experience, Skills, Project
-import uuid
 from sqlalchemy.orm import sessionmaker
 import time
 
@@ -15,7 +14,7 @@ def add_applicant(session, fName, lName, num, e, web, s, countryAdd, cityAdd):
         phone_number=num,
         email=e,
         website=web,
-        # state=s,
+        state=s,
         country=countryAdd,
         city=cityAdd,
         

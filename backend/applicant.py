@@ -17,7 +17,7 @@ class applicant_mapper:
                 num=data['phone_number'], 
                 e=data['email'], 
                 web=data['website'], 
-                # s=data['state'], 
+                s=data['state'], 
                 countryAdd=data['country'], 
                 cityAdd=data['city'],
                 session=session
