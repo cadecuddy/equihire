@@ -1,4 +1,6 @@
 affinda
 psycopg[binary]==3.0.16
 flask
-
+python-dotenv
+cockroachdb
+SQLAlchemy

@@ -1,16 +1,25 @@
 import os
 import json
 import logging
+import transactions
+import applicant
 from pdf2json import parse
+from cleanOutput import cleanJSON
 from flask import Flask, Response, flash, redirect, request, url_for
 from argparse import ArgumentParser, RawTextHelpFormatter
 import psycopg
 # from psycopg.errors import SerializationFailure, Error
 # from psycopg.rows import namedtuple_row
 from psycopg.rows import dict_row
+from cockroachdb.sqlalchemy import run_transaction
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 app = Flask(__name__)
 ALLOWED_EXTENSIONS = {'pdf', 'docx'}
+
+# conn_string = os.environ.get("DB_URI")
+
 
 # NOT NEEDED???
 @app.route("/")
@@ -23,12 +32,12 @@ def allowed_file(filename):
            
 # end that performs a POST request to upload a json file into our system
 # @app.route('/upload', methods=['POST'])
-@app.route('/upload', methods=['POST'])
+@app.route('/upload_resume', methods=['POST'])
 def upload_file():
-    print("hello")
+    print("HIT!")
     if request.method == 'POST':
-        print(request)
-        print(request.files)
+        # print(request)
+        # print(request.files)
         if 'file' not in request.files:
             flash('No file part')
             return redirect('/')
@@ -36,10 +45,18 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = file.filename
             file.save(os.path.join(filename))
-        return Response(parse(filename))
+        parse(filename)
+        data = cleanJSON()
+        opt = parse_cmdline()
+        db_url = opt.dsn
+        a=applicant.applicant_mapper(db_url)
+        a.add_applicant(data)
+    return redirect("/")
+
+
     
 # GET request to all the available applicant data in cockroachDB 
-# @app.route('/applicant_data', methods=['GET'])
+@app.route('/applicant_data', methods=['GET'])
 def getApplicantData():
     applicants = []
     opt = parse_cmdline()
@@ -61,7 +78,7 @@ def getApplicantData():
                 id = row["applicant_id"]
                 # 
                 experiences = cur.execute(f"SELECT * FROM public.experience WHERE public.experience.applicant_id = {id}").fetchall()
-                if experiences:
+                if experiences is not None:
                     for exp in experiences:
                         row.update(exp)
                 # 
@@ -84,15 +101,14 @@ def getApplicantData():
 
                 applicants.append(row)
                 print(applicants)
-            # print(json.dumps(applicants))
+            print(json.dumps(applicants))
+        return json.dumps(applicants)
                 
     except Exception as e:
         logging.fatal("database connection failed or other error")
         logging.fatal(e)
         return
-
-def deleteApplicant():
-    pass   
+  
 # parses command line to get the DATABASE_URL env variable
 def parse_cmdline():
     parser = ArgumentParser(description=__doc__,
@@ -116,4 +132,5 @@ database connection string\
         parser.error("database connection string not set")
     return opt      
 
-getApplicantData()
+# getApplicantData()
+# upload_file()
