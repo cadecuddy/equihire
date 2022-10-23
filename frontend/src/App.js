@@ -93,6 +93,8 @@ function App() {
         'approval_status': 0
     }]
 
+    const [realData, setRealData] = useState({});
+
     // let applicants = fetch("http://localhost:5000/applicants");
 
     for (let i = 0; i < dummmyData.length; i++) {
@@ -128,7 +130,7 @@ function App() {
                     <Route path = "/"element = { < About / > }/> 
                     <Route path = "/screening" element = { < Review changeStatus={changeStatus} reviewList={review} completeList={complete} data={dummmyData} settings = { settings }/>} / >
                     <Route path = "/settings" element = { < Settings settings = { settings } editSettings = { editSettings }/>} / >
-                    <Route path = "/upload" element = { < Upload /> }/>
+                    <Route path = "/upload" element = { < Upload setRealData={setRealData} /> }/>
                 </Routes>
             </div> 
             <Footer / >
