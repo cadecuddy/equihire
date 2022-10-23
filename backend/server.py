@@ -34,7 +34,7 @@ def upload_file():
             file.save(os.path.join(filename))
         return Response(parse(filename))
     
-@app.route('/applicant_data', methods=['GET'])
+# @app.route('/applicant_data', methods=['GET'])
 def getApplicantData():
     opt = parse_cmdline()
     logging.basicConfig(level=logging.DEBUG if opt.verbose else logging.INFO)
@@ -49,7 +49,8 @@ def getApplicantData():
                                application_name="$ docs_simplecrud_psycopg3", 
                                row_factory=namedtuple_row)
         with conn.cursor() as cur:
-            cur.execute("SELECT * FROM public.applicant1")
+            for row in cur.execute("SELECT * FROM public.applicant1"):
+                print(row)
 
     except Exception as e:
         logging.fatal("database connection failed")
@@ -80,5 +81,4 @@ database connection string\
         parser.error("database connection string not set")
     return opt      
 
-# if __name__ == "__main__":
-#     main()
+getApplicantData()
