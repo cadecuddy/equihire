@@ -8,6 +8,7 @@ from cleanOutput import cleanJSON
 from flask import Flask, Response, flash, redirect, request, url_for
 from argparse import ArgumentParser, RawTextHelpFormatter
 import psycopg
+from flask import CORS
 # from psycopg.errors import SerializationFailure, Error
 # from psycopg.rows import namedtuple_row
 from psycopg.rows import dict_row
@@ -19,7 +20,7 @@ app = Flask(__name__)
 ALLOWED_EXTENSIONS = {'pdf', 'docx'}
 db_uri = os.environ['DATABASE_URL'].replace("postgresql://", "cockroachdb://")
 # conn_string = os.environ.get("DB_URI")
-
+CORS(app)
 
 # NOT NEEDED???
 @app.route("/")
