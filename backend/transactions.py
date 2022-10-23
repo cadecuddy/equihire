@@ -5,9 +5,9 @@ from sqlalchemy.orm import sessionmaker
 import time
 
 def getID():
-    return 88
+    return int(time.time() / 1000000)
 
-global_id = int(time.time() / 10000)
+
 
 def add_applicant(session, fName, lName, num, e, web, s, countryAdd, cityAdd):
     applicant = Applicant(
