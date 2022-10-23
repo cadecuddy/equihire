@@ -12,9 +12,10 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions } from '@mui/material';
 import Button from '@mui/material/Button';
 import Resume from './Resume';
+import Divider from '@mui/material/Divider';
 
-export default function ListEntry({ settings, data }) {
-  const [status, setStatus] = useState(0);
+export default function ListEntry({ unreadList, changeStatus, settings, applicantData }) {
+  const [status, setStatus] = useState(applicantData.approval_status);
   const [open, setOpen] = useState(false);
 
   const buttons = [<RadioButtonUncheckedIcon />, <CheckCircleIcon sx={{ color: 'green' }} />, <NotInterestedIcon sx={{ color: 'red' }} />];
@@ -22,15 +23,23 @@ export default function ListEntry({ settings, data }) {
   const handleClose = (action) => {
     if (action === 'accept') {
       setStatus(1);
+      applicantData.approval_status = 1;
+      // changeStatus(applicantData.id, 1);
     }
     else if (action === 'reject') {
       setStatus(2);
+      applicantData.approval_status = 2;
+      // changeStatus(applicantData.id, -1);
     }
     else {
       setStatus(0);
+      applicantData.approval_status = 0;
+      // changeStatus(applicantData.id, 0);
     }
     setOpen(false);
   }
+
+  // console.log(applicantData.first_name, applicantData.approval_status);
 
   return (
     <ListItem
@@ -57,9 +66,10 @@ export default function ListEntry({ settings, data }) {
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle>Applicant Information: {data}</DialogTitle>
+        <DialogTitle>Applicant Information: {!settings["Name"] ? applicantData.first_name + " " + applicantData.last_name : "Applicant #" + applicantData.applicant_id}</DialogTitle>
+        <Divider />
         <DialogContent>
-          <Resume data={data} settings={settings} />
+          <Resume data={applicantData} settings={settings} />
         </DialogContent>
         <DialogActions>
           <Button variant="contained" color="success" centered onClick={() => handleClose('accept')}>Accept</Button>
@@ -73,7 +83,7 @@ export default function ListEntry({ settings, data }) {
         </Avatar>
       </ListItemAvatar>
       <ListItemText
-        primary={data}
+        primary={!settings["Name"] ? applicantData.first_name + " " + applicantData.last_name : "Applicant #" + applicantData.applicant_id}
       />
     </ListItem>
   )

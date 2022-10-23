@@ -4,30 +4,27 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import ApplicantList from './ApplicantList';
 
-export default function CenteredTabs({ settings }) {
+export default function CenteredTabs({ changeStatus, reviewList, completeList, data, settings }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const names = ["John", "Arthur", "Rainman", "John", "Arthur", "Rainman"];
-  const data = [{ name: "John", status: 0 }, { name: "Arthur", status: 1 }, { name: "Rainman", status: 2 }, { name: "John", status: 0 }, { name: "Arthur", status: 1 }, { name: "Rainman", status: 2 }];
+  // const names = ["John", "Arthur", "Rainman", "John", "Arthur", "Rainman"];
+  // const data = [{ name: "John", status: 0 }, { name: "Arthur", status: 1 }, { name: "Rainman", status: 2 }, { name: "John", status: 0 }, { name: "Arthur", status: 1 }, { name: "Rainman", status: 2 }];
+  // console.log(reviewList)
 
   return (
     <div className='w-[800px]'>
       <Box className="mt-8">
-        <Tabs tab value={value} onChange={handleChange} centered className="rounded-md">
+        <Tabs tab value={value} textColor={'secondary'} indicatorColor={'secondary'} onChange={handleChange} centered className="rounded-md">
           <Tab value={0} label="REVIEW" />
-          <Tab value={1} label="COMPLETE" />
         </Tabs>
       </Box>
       <Box className="pt-2">
         {value === 0 && (
-          <ApplicantList settings={settings} entries={names} unreadList={true} />
-        )}
-        {value === 1 && (
-          <ApplicantList settings={settings} entries={["John", "Harvey", "Kellogg"]} unreadList={false} />
+          <ApplicantList changeStatus={changeStatus} settings={settings} data={reviewList} unreadList={true} />
         )}
       </Box>
     </div>
