@@ -1,5 +1,5 @@
 affinda
-psycopg[binary]==3.0.16
+psycopg2-binary
 flask
 python-dotenv
 cockroachdb

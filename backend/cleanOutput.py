@@ -34,7 +34,6 @@ def cleanJSON():
         i += 1
     myDict[f"education_count"] = i - 1
         
-
     i = 1
     for work in data["work_experience"]:
         myDict[f"company_{i}"] = work["organization"]
@@ -45,7 +44,6 @@ def cleanJSON():
             myDict[f"endDate_{i}"] = work["dates"]["end_date"]
             i += 1
     myDict[f"work_count"] = i - 1
-
 
     i = 1
     for skill in data["skills"]:
@@ -58,7 +56,5 @@ def cleanJSON():
             myDict["projects"] =  section["text"]
             break
     myDict["approval_status"] = 0 
-    # print(myDict)
     return myDict
     
-# cleanJSON()

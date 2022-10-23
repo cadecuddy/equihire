@@ -7,8 +7,6 @@ import time
 def getID():
     return int(time.time() / 10000)
 
-
-
 def add_applicant(session, fName, lName, num, e, web, s, countryAdd, cityAdd):
     applicant = Applicant(
         applicant_id=getID(),
@@ -22,7 +20,6 @@ def add_applicant(session, fName, lName, num, e, web, s, countryAdd, cityAdd):
         city=cityAdd,
         
     )
-    # global_id = applicant.applicant_id
     session.add(applicant)
     return applicant
 
