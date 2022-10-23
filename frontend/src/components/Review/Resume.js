@@ -105,7 +105,7 @@ export default function Resume({ settings, data }) {
       </div>
 
       <div>
-        <h1 className="text-2xl text-left underline font-bold">Skills</h1>
+        <h1 className="text-2xl text-left underline font-bold">{data.skills.length > 0 ? "Skills" : null}</h1>
         <div className='text-xl'>
           {data.skills.length > 0 ? data.skills.map((skill) => (
             <div className='flex-row text-base'>
