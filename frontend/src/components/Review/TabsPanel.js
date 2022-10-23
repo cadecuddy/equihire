@@ -4,7 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import ApplicantList from './ApplicantList';
 
-export default function CenteredTabs({ changeStatus, reviewList, completeList, data, settings }) {
+export default function CenteredTabs({ reviewList, completeList, data, settings }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -24,7 +24,7 @@ export default function CenteredTabs({ changeStatus, reviewList, completeList, d
       </Box>
       <Box className="pt-2">
         {value === 0 && (
-          <ApplicantList changeStatus={changeStatus} settings={settings} data={reviewList} unreadList={true} />
+          <ApplicantList settings={settings} data={reviewList} unreadList={true} />
         )}
       </Box>
     </div>
