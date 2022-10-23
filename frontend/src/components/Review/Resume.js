@@ -3,6 +3,7 @@ import React from 'react'
 
 export default function Resume({ settings, data }) {
 
+  console.log(data);
   const educationHistory = () => {
     let output = [];
 
@@ -33,7 +34,7 @@ export default function Resume({ settings, data }) {
           {
           !settings.Email ? 
           <div className='flex flex-row text-xl'>
-            {data.emails ? "Email: "  +  data.emails : 'N/A'}
+            {data.email ? "Email: "  +  data.email : 'N/A'}
           </div>
           : null
           }
@@ -66,16 +67,16 @@ export default function Resume({ settings, data }) {
           (true) ? 
           <>
             <h1 className="text-2xl text-left underline font-bold">Education</h1>
-            {data.education_count > 0 ?
+            {data.educations.length > 0 ?
             <div>
-              {educationHistory().map(edu => (
+              {data.educations.map(edu => (
                 (settings.University) ?
                   <div className='flex text-lg'>
-                    {edu.Degree} - {edu.GPA}
+                    {edu.education} - {edu.gpa}
                   </div>
                 :
                 <div className='flex text-lg'>
-                  {edu.University} - {edu.Degree} |  {edu.GPA}
+                  {edu.university} - {edu.education} |  {edu.gpa}
                 </div>
               ))}
               </div> : 
@@ -90,12 +91,12 @@ export default function Resume({ settings, data }) {
       <div>
         <h1 className="text-2xl text-left underline font-bold">Work Experience</h1>
         <div className='text-xl'>
-        {data.work_count > 0 ? 
+        {data.experiences.length > 0 ? 
           <div className='text-xl'>
-            {workHistory().map(work => (
+            {data.experiences.map(work => (
               <div className='flex-row'>
-                <h1 className='w-full'><span className='italic'>{work.Title}</span> | {work.Location}</h1>
-                <p className='text-sm'>{work.Description}</p>
+                <h1 className='w-full'><span className='italic'>{work.job_title}</span> | {work.company}</h1>
+                <p className='text-sm'>{work.job_description}</p>
               </div>
             ))}
             </div> : null}
@@ -106,9 +107,9 @@ export default function Resume({ settings, data }) {
       <div>
         <h1 className="text-2xl text-left underline font-bold">Skills</h1>
         <div className='text-xl'>
-          {data.skill_count > 0 ? Array(data.skill_count).fill(0).map((_, i) => (
+          {data.skills.length > 0 ? data.skills.map((skill) => (
             <div className='flex-row text-base'>
-              <h1 className='w-full'>- {data[`skill_${i + 1}`]}</h1>
+              <h1 className='w-full'>- {skill.skill_info}</h1>
             </div>
           )) : null}
           <br></br>
@@ -116,13 +117,12 @@ export default function Resume({ settings, data }) {
       </div>
 
       <div>
-        <h1 className="text-2xl text-left underline font-bold">Projects</h1>
-        <div className='text-xl'>
-          {data.project ? 
+        <h1 className="text-2xl text-left underline font-bold">{data.project_text ? "Projects" : null}</h1>
+        {data.project_text ? (<div className='text-xl'>
           <div className='text-base'>
-            {data.project}
-          </div> : null}
-        </div>
+            {data.project_text}
+          </div>
+        </div>) : null}
 
       </div>
 

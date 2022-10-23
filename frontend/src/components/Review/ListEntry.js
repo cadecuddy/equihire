@@ -13,8 +13,10 @@ import { Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions } 
 import Button from '@mui/material/Button';
 import Resume from './Resume';
 import Divider from '@mui/material/Divider';
+import axios from 'axios';
 
-export default function ListEntry({ unreadList, changeStatus, settings, applicantData }) {
+export default function ListEntry({ unreadList, settings, applicantData }) {
+  console.log(applicantData.approval_status);
   const [status, setStatus] = useState(applicantData.approval_status);
   const [open, setOpen] = useState(false);
 
@@ -29,6 +31,9 @@ export default function ListEntry({ unreadList, changeStatus, settings, applican
     else if (action === 'reject') {
       setStatus(2);
       applicantData.approval_status = 2;
+      axios.delete(`http://127.0.0.1:5000/delete/${applicantData.applicant_id}`).finally(() => {
+        window.location.reload(false);
+      });
       // changeStatus(applicantData.id, -1);
     }
     else {

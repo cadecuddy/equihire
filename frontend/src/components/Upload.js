@@ -19,10 +19,8 @@ export default function Upload({setRealData}) {
 
     form.append("file", file);
 
-    axios.post("http://127.0.0.1:5000/upload_resume", form);
-    axios.get("http://127.0.0.1:5000/applicant_data").then((response) => {
-      console.log(response.data);
-      // setRealData(response.data);
+    axios.post("http://127.0.0.1:5000/upload_resume", form).finally(() => {
+      window.location.reload(false);
     });
   };
 
