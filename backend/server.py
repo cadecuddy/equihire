@@ -99,9 +99,9 @@ def getApplicantData():
                     row.update(d)
 
                 applicants.append(row)
-                print(applicants)
-            print(json.dumps(applicants))
-        return json.dumps(applicants)
+                # print(applicants)
+            # print(json.dumps(applicants))
+        return applicants
                 
     except Exception as e:
         logging.fatal("database connection failed or other error")
